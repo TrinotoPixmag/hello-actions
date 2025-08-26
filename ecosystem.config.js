@@ -3,7 +3,7 @@ module.exports = {
       {
         name: "hello-actions",
         script: "./index.js",
-        cwd: "/home/ubuntu/hello-actions",
+        cwd: "/var/www/hello-actions",
         instances: 1,
         autorestart: true,
         watch: false,
