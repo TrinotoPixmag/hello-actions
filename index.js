@@ -1,5 +1,5 @@
 function hello() {
-    return "Hello, GitHub Actions Its CI/CD 1!";
+    return "Hello, GitHub Actions Its CI/CD 2!";
   }
   
   if (require.main === module) {
