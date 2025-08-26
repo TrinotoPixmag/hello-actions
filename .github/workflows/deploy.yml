@@ -1,35 +1,27 @@
-name: CI/CD Node.js to GCP
+name: Deploy Dockerized App
 
+# Trigger saat ada push ke branch main
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
+    # Pastikan runner self-hosted di server yang punya Docker
+    runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v3
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "18"
+      # 2. Pull image terbaru (optional)
+      - name: Build and start Docker Compose
+        run: |
+          # Masuk ke direktori proyek jika perlu
+          cd /var/www/hello-actions
 
-      - run: npm install
-      - run: npm test
-
-      - name: Deploy to GCP VM with Docker Compose
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
-          script: |
-            cd /var/www/hello-actions || git clone https://github.com/trinotoPixmag/hello-actions.git /var/www/hello-actions
-            cd /var/www/hello-actions
-            git fetch origin main
-            git reset --hard origin/main
-            docker compose down
-            docker compose up -d --build
-
+          # Gunakan Docker Compose versi 2 (docker compose)
+          docker compose pull || true
+          docker compose up -d --build
