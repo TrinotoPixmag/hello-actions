@@ -5,10 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.0.5"
+  }
 }
