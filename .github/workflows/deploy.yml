@@ -28,6 +28,7 @@ jobs:
           script: |
             cd ~/hello-actions || git clone https://github.com/trinotoPixmag/hello-actions.git ~/hello-actions
             cd ~/hello-actions
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main   # pastikan sync dengan repo
             npm install --production
-            pm2 restart hello-actions || pm2 start index.js --name hello-actions
+            pm2 startOrReload ecosystem.config.js --update-env
